@@ -1,2 +1,2 @@
-hi.txt
-bye.txt
+hi.py
+bye.mp3
