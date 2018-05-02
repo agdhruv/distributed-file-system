@@ -67,20 +67,26 @@ while True:
     # we have the port number decided at this point
     # now we just need to send the file to the decided port
 
-    # now, update the index
-    with open('myIndex/index.txt', 'a+') as f:
-        f.seek(0)
+    # now, go through index and add '/' to the filename if it already exists (which means it's being modified)
+    to_write = ''
+
+    with open('myIndex/index.txt', 'r') as f:
         for line in f:
-            line = line.rstrip('\n')
             # if filename exists: modification. Mention that in the log
-            if line == header:
-                line = line + '/\n'
-                break
+            if line.rstrip('\n') == header:
+                line = line.rstrip('\n') + '/\n'
+            to_write += line
+
+    with open('myIndex/index.txt', 'w') as f:
+        f.write(to_write)
 
     s2.connect((host2, port2))
 
     data = s2.recv(1024)
     print 'Message received from node:', repr(data)
+
+    import time
+    time.sleep(20)
 
     # send the filename and extension to the server to store it
     s2.send(file_extension + '/' + header + '\n')
@@ -95,27 +101,23 @@ while True:
 
     os.remove(header)
 
+    # now, update the index
+    file_found = False
+    to_write = ''
+
     with open('myIndex/index.txt', 'r') as f:
         for line in f:
-            print line
-
-    import time
-    time.sleep(10)
-
-    # now, update the index
-    with open('myIndex/index.txt', 'a+') as f:
-        f.seek(0)
-        file_found = False
-        for line in f:
-            line = line.rstrip('\n')
             # if filename already exists, update flag
-            if line.rstrip('/') == header:
-                line = line[:-1]
+            if line.rstrip('\n').rstrip('/') == header:
+                line = line.rstrip('\n').rstrip('/') + '\n'
                 file_found = True
-                break
+            to_write += line
 
-        if not file_found:
-            f.write(header + '\n')
+    if not file_found:
+        to_write += header + '\n'
+
+    with open('myIndex/index.txt', 'w') as f:
+        f.write(to_write)
 
     print 'Done sending', file_extension + '/' + header, 'to port', port2, 'of storage node\n'
     s2.close()

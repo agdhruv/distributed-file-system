@@ -19,7 +19,7 @@ while True:
 
     if request == '1':
         with open("myIndex/index.txt", 'rb') as f:
-            c.send("\nYour files on the server are:\n")
+            c.send("\nYour files on the server are ('/' means updating):\n")
             l = f.read(1024)
 
             while (l):
@@ -37,18 +37,20 @@ while True:
                 break
             header += data
 
-        file_exists = False
+        file_exists = 'no'
 
         with open("myIndex/index.txt", 'r') as f:
             for line in f:
-                line = line.rstrip('\n')
-                if line == header:
-                    file_exists = True
+                if line.rstrip('\n') == header:
+                    file_exists = 'yes'
+                    break
+                elif line.rstrip('\n').rstrip('/') == header:
+                    file_exists = 'updating'
                     break
 
-        c.send(str(file_exists))
+        c.send(file_exists)
 
-        if file_exists:
+        if file_exists == 'yes':
             # create connection with the node to fetch the file
             s2 = socket.socket()
             host2 = '10.1.19.139'
@@ -93,10 +95,6 @@ while True:
 
             # remove the file from my system
             os.remove(header)
-        else:
-            # if file does not exist on the server, send this message
-            c.send('This file does not exist on the server.')
-            print "Sent", repr('This file does not exist on the server.')
 
     c.close()
     print '[-] Connection closed with', addr
