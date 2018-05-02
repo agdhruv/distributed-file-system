@@ -1,1 +1,4 @@
 env/
+client/source_folder/
+client/target_folder/
+.idea/

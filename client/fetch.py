@@ -45,6 +45,6 @@ else:                        # fetching the file asked by the client
 		print 'Successfully received', file_to_fetch, 'in the target_folder/\n'
 	else:
 		message = s.recv(1024)
-		print "\n" + message + "\n"
+		print message
 
 s.close()

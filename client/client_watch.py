@@ -31,7 +31,7 @@ class MyHandler(FileSystemEventHandler):
     	print 'Done sending', filename
     	s.close()
 
-        # print event.src_path, event.event_type
+        # print event.src_path, event.event_type, event.is_directory
 
     def on_modified(self, event):
     	# do nothing if the modification is something related to a folder
@@ -39,11 +39,11 @@ class MyHandler(FileSystemEventHandler):
     		return
         self.send_to_server(event)
 
-    def on_created(self, event):
-    	# do nothing if the modification is something related to a folder
-    	if event.is_directory:
-    		return
-        self.send_to_server(event)
+    # def on_created(self, event):
+    # 	# do nothing if the modification is something related to a folder
+    # 	if event.is_directory:
+    # 		return
+    #     self.send_to_server(event)
 
 event_handler = MyHandler()
 observer = Observer()
