@@ -6,7 +6,7 @@ port = 12346                # Reserve a port for your service.
 s.connect((host, port))
 
 data = s.recv(1024)
-print "\nMessage from node:", repr(data)
+print "\nMessage from server:", repr(data)
 
 file_to_fetch = None
 
@@ -32,7 +32,7 @@ else:                        # fetching the file asked by the client
 
 	exists = s.recv(1024)
 
-	if exists == 'True':
+	if exists == 'yes':
 		with open('target_folder/' + file_to_fetch, 'wb') as f:
 			# print file_to_fetch, 'opened'
 
@@ -43,8 +43,11 @@ else:                        # fetching the file asked by the client
 				f.write(data)
 
 		print 'Successfully received', file_to_fetch, 'in the target_folder/\n'
+	elif exists == 'no':
+		message = 'This file does not exist on the server.'
+		print message
 	else:
-		message = s.recv(1024)
+		message = 'This file is currently being updated. Please try again later.'
 		print message
 
 s.close()
