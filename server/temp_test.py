@@ -1,5 +1,3 @@
-with open('myIndex/index.txt', 'a+') as f:
-    f.seek(0)
+with open('myIndex/temp.txt', 'a+') as f:
     for line in f:
-        print line.rstrip('\n')
-    f.write('input')
+        line = "hi"
