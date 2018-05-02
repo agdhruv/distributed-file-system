@@ -2,3 +2,7 @@ env/
 client/source_folder/
 client/target_folder/
 .idea/
+node/mp3/
+node/pdf/
+node/others/
+node/txt/
