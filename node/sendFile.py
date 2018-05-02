@@ -15,7 +15,7 @@ print('Server listening....')
 while True:
     c, addr = s.accept()  # Establish connection with client.
     print('Got connection from', addr)
-    c.send("Hello Client")
+    c.send(b"Hello Client")
     fileToServe = b''
 
     while True:
