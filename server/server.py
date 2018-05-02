@@ -67,10 +67,20 @@ while True:
     # we have the port number decided at this point
     # now we just need to send the file to the decided port
 
+    # now, update the index
+    with open('myIndex/index.txt', 'a+') as f:
+        f.seek(0)
+        for line in f:
+            line = line.rstrip('\n')
+            # if filename exists: modification. Mention that in the log
+            if line == header:
+                line = line + '/\n'
+                break
+
     s2.connect((host2, port2))
 
     data = s2.recv(1024)
-    print 'Message received from server:', repr(data)
+    print 'Message received from node:', repr(data)
 
     # send the filename and extension to the server to store it
     s2.send(file_extension + '/' + header + '\n')
@@ -85,6 +95,13 @@ while True:
 
     os.remove(header)
 
+    with open('myIndex/index.txt', 'r') as f:
+        for line in f:
+            print line
+
+    import time
+    time.sleep(10)
+
     # now, update the index
     with open('myIndex/index.txt', 'a+') as f:
         f.seek(0)
@@ -92,12 +109,13 @@ while True:
         for line in f:
             line = line.rstrip('\n')
             # if filename already exists, update flag
-            if line == header:
+            if line.rstrip('/') == header:
+                line = line[:-1]
                 file_found = True
                 break
 
         if not file_found:
             f.write(header + '\n')
 
-    print 'Done sending', file_extension + '/' + header, 'to port', port2, '\n'
+    print 'Done sending', file_extension + '/' + header, 'to port', port2, 'of storage node\n'
     s2.close()
