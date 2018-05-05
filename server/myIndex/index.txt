@@ -1,5 +1,19 @@
-hi.mp4
-123.deb
-Matrices.pdf
-Matrices.jpg
-haha.py
+test.mp3
+lol.pdf
+check.zip
+random.py
+text.txt
+text (copy).txt
+text (another copy).txt
+text (3rd copy).txt
+text (4th copy).txt
+text (5th copy).txt
+text (6th copy).txt
+text (7th copy).txt
+text (8th copy).txt
+text (9th copy).txt
+text (10th copy).txt
+text (11th copy).txt
+text (12th copy).txt
+text (13th copy).txt
+text (14th copy).txt

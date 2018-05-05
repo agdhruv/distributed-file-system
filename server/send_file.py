@@ -53,7 +53,7 @@ while True:
         if file_exists == 'yes':
             # create connection with the node to fetch the file
             s2 = socket.socket()
-            host2 = '10.1.19.139'
+            host2 = '10.1.21.202'
             port2 = 9004
 
             # decide folder in node on the basis of file extension
@@ -67,6 +67,9 @@ while True:
             s2.connect((host2, port2))
 
             print "Now connected to the node server"
+
+            data = s2.recv(1024)
+            print "Message from node:", repr(data)
 
             # send file name to the node to fetch it
             s2.send(file_extension + '/' + header + '\n')

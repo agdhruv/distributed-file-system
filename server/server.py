@@ -45,7 +45,7 @@ while True:
 
     # create a new socket object to send the code
     s2 = socket.socket()
-    host2 = '10.1.19.139'
+    host2 = '10.1.21.202'
 
     # decide port number on the basis of the file extension
     filename, file_extension = os.path.splitext(header)
@@ -85,8 +85,8 @@ while True:
     data = s2.recv(1024)
     print 'Message received from node:', repr(data)
 
-    import time
-    time.sleep(20)
+    # import time
+    # time.sleep(20)
 
     # send the filename and extension to the server to store it
     s2.send(file_extension + '/' + header + '\n')
